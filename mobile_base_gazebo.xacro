@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="https://www.ros.org/wiki/xacro" >
+<!--WHen u run the gazebo the robot will be without the color,so add clr with gazebo tags-->
+<!--Adding colors for robot in gazebo-->
+    <gazebo reference="base_link">
+        <material>Gazebo/Red</material>
+    </gazebo>
+
+    <gazebo reference="right_wheel_link">
+        <material>Gazebo/Blue</material>
+    </gazebo> 
+
+    <gazebo reference="left_wheel_link">
+        <material> Gazebo/Blue</material>
+    </gazebo>
+
+    <gazebo reference="caster_wheel">
+        <material> Gazebo/Blue</material>
+        <mul value="0.1"/> <!--We can add it make it bit smooth,on gazebo-->
+        <mu2 value="0.1"/>
+    </gazebo>
+
+    <gazebo>
+        <plugin name="diff_drive_controller" filename="libgazebo_difff_drive.so">
+            <!--update rate in HZ,50hz which means 50times per sec-->
+            <update_rate>50</update_rate>
+            <!--wheels-->
+            <left_joint>base_left_wheel_joint</left_joint>
+            <right_joint>base_right_wheel_joint</right_joint>
+            <!--kinematics,Distance bw the centre of the both wheels-->
+            <wheel_speration>0.45</wheel_speration>
+            <!--Diameter is twice the amount of wheel radius-->
+            <wheel_diameter>0.2</wheel_diameter>
+            <!--output-->
+            <!--Odom is used to see the origin of thre robot-->
+            <publish_odom>true</publish_odom>
+            <publish_odom_tf>true</publish_odom_tf>
+            <publish_wheel_tf>true</publish_wheel_tf>
+            <odometry_topic>odom</odometry_topic>
+            <odometry_frame>odom</odometry_frame>
+            <robot_base_frame>base_footprint</robot_base_frame>
+        </plugin>
+    </gazebo>
+</robot>                                

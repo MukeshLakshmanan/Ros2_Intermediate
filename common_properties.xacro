@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="https://www.ros.org/wiki/xacro">
+
+    <material name="red" >
+        <color rgba="0.5 0 0 1" />
+    </material>
+    
+    <material name ="blue">
+        <color rgba ="0.5 0.5 0.9 1" />
+    </material>
+    
+    <!--Interial for Box,Refer formula on Wikipedia-->
+    <xacro:macro name="box_interia" params="m l w h xyz rpy">
+        <interial>
+            <origin xyz="${xyz}" rpy="${rpy}"/>
+            <mass value="${m}" />
+            <interia ixx="${(m/12) * (h * h + l * l)}" ixy="0" ixz="0"
+                     iyy="${(m/12) * (w * w + l * l)}" iyz="0" 
+                     izz="${(m/12) * (w * w + h * h )}" />
+        </interial>             
+    </xacro:macro>
+    <!--Interial for Cylinder,Refer Wikpedia for formula-->
+    <xacro:macro name="cylinder_interia" params="m r h xyz rpy" >
+        <interial>
+            <origin xyz="${xyz}" rpy="${rpy}" />
+            <mass value="${m}" />
+            <interia ixx="${(m/12) * (3*r*r + h * h )}" ixy="0" ixz="0" 
+                     iyy="${(m/12) * (3*r*r + h * h )}" iyz="0"
+                     izz="${(m/2) * (r *r)}"/>
+        </interial>
+    </xacro:macro>
+    <!--Interial for Sphere,Refer Wikipedia for formula-->
+    <xacro:macro name="sphere_interia" params= "m r xyz rpy">
+        <interial>
+            <origin xyz="${xyz}" rpy="${rpy}" />
+            <mass value="${m}" />
+            <interia ixx="${(2/5) * m * r * r}" ixy="0" ixz="0" 
+                     iyy="${(2/5) * m * r * r}" iyz="0"
+                     izz="${(2/5) * m * r * r}"/>
+        </interial>
+    </xacro:macro>
+
+</robot>
