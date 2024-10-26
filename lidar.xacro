@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="https://www.ros.org/wiki/xacro" >
+    <!--lidar link-->
+    <link name="lidar_link">
+        <visual>
+            <geometry>
+                <cylinder radius="0.1" length="0.05"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="0.1" length="0.05"/>
+            </geometry>
+            <material name="blue"/>
+        </collision>
+        <xacro:lidar_interia m ="0.2" r="0.1" h="0.05" xyz="0 0 0" rpy="0 0 0"/>
+    </link>
+    <!--joint btw lidar & base_link-->
+    <joint name = "base_lidar_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="lidar_link"/>
+        <origin xyz="0.1 0 0.2" rpy="0 0 0"/>
+    </joint>
+    <!--plugins for lidar-->
+    <gazebo reference="lidar_link">
+        <sensor name="laser" type="ray">
+            <pose>0 0 0 0 0 0</pose>
+            <visulation>true</visulation>
+            <update_rate>10</update_rate>
+            <plugin name="laser_controller" filename="libgazebo_ros_sensor.so">
+                <frame_name>lidar_link</frame_name>
+            </plugin>
+
+        </sensor>
+    </gazebo>
+</robot>
